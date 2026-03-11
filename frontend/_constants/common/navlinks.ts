@@ -4,7 +4,6 @@ export const navlinks = [
   { text: "Contact", href: "#contact" },
   { text: "Features", href: "#features" },
   { text: "Templates", href: "#templates" },
-  { text: "Contact", href: "#contact" },
   { text: "Pricing", href: "#pricing" },
   { text: "FAQ", href: "#faq" }
 ];

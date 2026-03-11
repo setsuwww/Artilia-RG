@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import { Badge } from "@/_components/ui/badge";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Sparkles } from "@hugeicons/core-free-icons";
 import Navbar from "@/_components/common/Navbar";
@@ -13,17 +12,13 @@ export default function Hero() {
 
         <Image src="/image/hero-background.jpg" alt="Hero background" fill priority className="object-cover" />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-black/30" />
 
         <main className="relative z-10 flex min-h-screen items-center px-10 lg:px-24">
           <div className="max-w-2xl text-left text-white">
 
-            <Badge className="bg-yellow-500/20 text-yellow-500 mb-4">
-              Fast response with AI
-            </Badge>
-
-            <h1 className="text-7xl font-extrabold leading-tight mb-6">
-              Artilia
+            <h1 className="text-7xl font-extrabold leading-tight mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-teal-400 to-sky-300">
+              Artilia Generator.
             </h1>
 
             <h1 className="text-5xl font-bold leading-tight mb-6 text-gray-400">

@@ -1,95 +1,54 @@
-import { Sparkles, FileText, Briefcase, Globe } from "lucide-react";
+import { Sparkles, FileText, Briefcase, Globe, Zap, Shield, Users, Star, ArrowRight, CheckCircle, Award, Heart } from "lucide-react";
 
 export default function About() {
   return (
-    <section className="relative overflow-hidden px-6 py-28">
+    <section id="about" className="relative overflow-hidden px-6 py-28">
 
-      {/* Background Gradient */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-zinc-100 via-white to-zinc-100 dark:from-zinc-950 dark:via-black dark:to-zinc-950" />
+      <div className="mx-auto max-w-6xl relative">
+        <div className="text-left mb-20 relative">
 
-      <div className="mx-auto max-w-5xl">
-
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-extrabold tracking-tight">
-            About Artilia
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
+            <span className="bg-gradient-to-r from-yellow-500 to-teal-400 bg-clip-text text-transparent">
+              About Artilia.
+            </span>
           </h1>
 
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            AI-powered platform to generate professional personal profiles,
-            resumes, job application letters, and portfolios instantly.
+          <p className="mt-6 text-xl text-gray-600 dark:text-gray-400 pr-0 lg:pr-40 mx-auto leading-relaxed">
+            Revolutionizing professional profile creation with artificial intelligence.
+            Transform your career story into compelling documents in seconds, simple prompt and little adjustment, and your personal profile is done
           </p>
         </div>
 
-        {/* Glass Card Content */}
-        <div className="rounded-2xl border border-zinc-200 p-10">
-
-          <div className="space-y-6 text-gray-600 dark:text-gray-300 leading-relaxed">
-
-            <p>
-              Artilia is an AI-powered platform designed to help individuals
-              build professional personal profiles quickly and efficiently.
-              With just a simple prompt, users can generate polished
-              documents such as resumes, job application letters,
-              portfolios, and other professional materials.
-            </p>
-
-            <p>
-              The platform uses artificial intelligence to transform
-              basic information into well-structured and recruiter-friendly
-              content. This allows users to present their skills,
-              experiences, and achievements in a clear and professional
-              format without spending hours writing or formatting
-              documents.
-            </p>
-
-            <p>
-              Artilia also supports multiple languages, including
-              English and Indonesian, enabling users to create
-              professional profiles in the language they prefer.
-            </p>
-
-            <p>
-              Our mission is simple: make professional self-presentation
-              easier, faster, and accessible for everyone.
-            </p>
-
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+          {[
+            { label: "Active Users", value: "10K+", icon: Users, color: "bg-yellow-100/40 text-yellow-700 border-yellow-300 outline-yellow-300" },
+            { label: "Documents Generated", value: "50K+", icon: FileText, color: "bg-teal-100/40 text-teal-700 border-teal-300 outline-teal-300" },
+            { label: "Success Rate", value: "98%", icon: Award, color: "bg-emerald-100/40 text-emerald-700 border-emerald-300 outline-emerald-300" },
+            { label: "Languages", value: "5+", icon: Globe, color: "bg-sky-100/40 text-sky-700 border-sky-300 outline-sky-300" },
+          ].map((stat, idx) => {
+            const Icon = stat.icon;
+            return (
+              <div
+                key={idx}
+                className="relative group"
+              >
+                <div className="relative bg-white border border-gray-200 rounded-xl p-6 text-center hover:border-blue-500/30 transition-all duration-300">
+                  <div className={`inline-flex p-3 rounded-full mb-4 border outline outline-offset-4 ${stat.color}`}>
+                    <Icon className={`w-6 h-6`} />
+                  </div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    {stat.label}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-
-        {/* Features */}
-        <div className="grid md:grid-cols-3 gap-6 mt-16">
-
-          <div className="rounded-xl border p-6 hover:shadow-lg transition">
-            <FileText className="mb-4 text-blue-500" />
-            <h3 className="font-semibold mb-2">AI CV Generator</h3>
-            <p className="text-sm text-gray-600">
-              Instantly generate structured and professional resumes
-              optimized for recruiters and ATS systems.
-            </p>
-          </div>
-
-          <div className="rounded-xl border p-6 hover:shadow-lg transition">
-            <Briefcase className="mb-4 text-purple-500" />
-            <h3 className="font-semibold mb-2">Job Application Letters</h3>
-            <p className="text-sm text-gray-600">
-              Create personalized job application letters tailored
-              for specific positions and companies.
-            </p>
-          </div>
-
-          <div className="rounded-xl border p-6 hover:shadow-lg transition">
-            <Globe className="mb-4 text-green-500" />
-            <h3 className="font-semibold mb-2">Multi-Language</h3>
-            <p className="text-sm text-gray-600">
-              Generate professional profiles in multiple languages,
-              including English and Indonesian.
-            </p>
-          </div>
-
-        </div>
-
       </div>
+
     </section>
   );
 }
