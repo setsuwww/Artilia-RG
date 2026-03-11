@@ -1,42 +1,58 @@
-# app/auth_controller.py
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from passlib.context import CryptContext
-from jose import jwt
-from pydantic import BaseModel
-from . import models, database
+from pydantic import BaseModel, EmailStr
+from .. import models, database
+from ..helpers.auth_helpers import (
+    create_access_token,
+    verify_password,
+    get_password_hash,
+    get_current_user
+)
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-SECRET_KEY = "secret-key"  # ganti di production
 
-# Pydantic schemas
+# -----------------------------
+# Schemas
+# -----------------------------
 class UserCreate(BaseModel):
-    email: str
+    email: EmailStr
     password: str
 
 class UserLogin(BaseModel):
-    email: str
+    email: EmailStr
     password: str
 
-# Register
-@router.post("/register")
+class UserOut(BaseModel):
+    id: int
+    email: EmailStr
+    role: str
+
+    class Config:
+        orm_mode = True
+
+# -----------------------------
+# Routes
+# -----------------------------
+@router.post("/register", response_model=UserOut)
 def register(user: UserCreate, db: Session = Depends(database.get_db)):
-    db_user = db.query(models.User).filter(models.User.email == user.email).first()
-    if db_user:
+    existing = db.query(models.User).filter(models.User.email == user.email).first()
+    if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
-    hashed_pw = pwd_context.hash(user.password)
-    new_user = models.User(email=user.email, hashed_password=hashed_pw)
+    hashed_password = get_password_hash(user.password)
+    new_user = models.User(email=user.email, hashed_password=hashed_password)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return {"id": new_user.id, "email": new_user.email}
+    return new_user
 
-# Login
 @router.post("/login")
 def login(user: UserLogin, db: Session = Depends(database.get_db)):
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
-    if not db_user or not pwd_context.verify(user.password, db_user.hashed_password):
+    if not db_user or not verify_password(user.password, db_user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    token = jwt.encode({"sub": db_user.email}, SECRET_KEY)
-    return {"access_token": token, "token_type": "bearer"}
+    access_token = create_access_token({"sub": db_user.email})
+    return {"access_token": access_token, "token_type": "bearer"}
+
+@router.get("/me", response_model=UserOut)
+def me(current_user: models.User = Depends(get_current_user)):
+    return current_user

@@ -1,2 +1,1 @@
-# Profile generator use Django python for Backend-service & Nextjs for frontend
-# Artilia-Resume-generator
+# Profile generator use FastAPI python for Backend-service & Nextjs for frontend
