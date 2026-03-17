@@ -2,8 +2,10 @@
 backend/__pycache__/
 backend/venv/
 backend/*.pyc
-echo "artilia-key-config.json" >> .gitignore
-echo "backend/app/**/artilia-key-config.json" >> .gitignore
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
 
 # Node / Next.js
 frontend/node_modules/
