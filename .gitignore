@@ -1,5 +1,6 @@
 # Python / FastAPI
 backend/__pycache__/
+backend/app/core/firebase.json
 backend/venv/
 backend/*.pyc
 __pycache__/
