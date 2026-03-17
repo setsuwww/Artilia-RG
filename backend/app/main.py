@@ -1,14 +1,13 @@
 from fastapi import FastAPI
-from . import models, database, auth_controller
+from app.core.firebase import db
 
-app = FastAPI(title="Artilia API")
-
-# Create tables
-models.Base.metadata.create_all(bind=database.engine)
-
-# Include routes
-app.include_router(auth_controller.router)
+app = FastAPI()
 
 @app.get("/")
-def root():
-    return {"message": "Artilia FastAPI backend running"}
+def read_root():
+    return {"msg": "API jalan"}
+
+@app.post("/users")
+def create_user():
+    db.collection("users").add({"name": "test"})
+    return {"ok": True}
