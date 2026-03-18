@@ -1,13 +1,7 @@
 from fastapi import FastAPI
-from app.core.firebase import db
+from app.routes import auth, user
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"msg": "API jalan"}
-
-@app.post("/users")
-def create_user():
-    db.collection("users").add({"name": "test"})
-    return {"ok": True}
+app.include_router(auth.router)
+app.include_router(user.router)

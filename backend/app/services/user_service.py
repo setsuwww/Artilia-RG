@@ -1,16 +1,34 @@
-from app.core.firebase import db
+from sqlalchemy.orm import Session
+from app.models.user import User
+from fastapi import HTTPException
 
-def create_user(data: dict):
-    doc_ref = db.collection("users").add(data)
-    return {"id": doc_ref[1].id}
+def get_users(db: Session):
+    return db.query(User).all()
 
-def get_all_users():
-    docs = db.collection("users").stream()
-    result = []
 
-    for doc in docs:
-        item = doc.to_dict()
-        item["id"] = doc.id
-        result.append(item)
+def get_user_by_id(db: Session, user_id: int):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
 
-    return result
+
+def update_user(db: Session, user_id: int, data: dict):
+    user = get_user_by_id(db, user_id)
+
+    for key, value in data.items():
+        setattr(user, key, value)
+
+    db.commit()
+    db.refresh(user)
+
+    return user
+
+
+def delete_user(db: Session, user_id: int):
+    user = get_user_by_id(db, user_id)
+
+    db.delete(user)
+    db.commit()
+
+    return {"msg": "User deleted"}

@@ -1,10 +1,8 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from .database import Base
-
-from pydantic import BaseModel
-from typing import Dict
+from app.db.session import Base
+from enum import Enum
 
 class DocumentType(str, Enum):
     cv = "cv"
