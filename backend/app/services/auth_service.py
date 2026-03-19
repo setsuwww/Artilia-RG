@@ -19,7 +19,6 @@ def register_user(db: Session, email: str, password: str):
 
     return user
 
-
 def login_user(db: Session, email: str, password: str):
     user = db.query(User).filter(User.email == email).first()
 
@@ -32,7 +31,6 @@ def login_user(db: Session, email: str, password: str):
         "access_token": token,
         "token_type": "bearer"
     }
-
 
 def get_me(user: User):
     return user

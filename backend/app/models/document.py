@@ -14,7 +14,7 @@ class Document(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
-    type = Column(SQLEnum(DocumentType))
+    type = Column(String, default=DocumentType.cv)
     language = Column(String, default="en")
     content = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
